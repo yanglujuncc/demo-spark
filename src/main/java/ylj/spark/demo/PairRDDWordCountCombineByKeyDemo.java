@@ -55,8 +55,10 @@ public class PairRDDWordCountCombineByKeyDemo {
             public AvgCount call(Integer x) {
                 
                 //每个分区 创建一个
-                return new AvgCount(x, 1);
-
+                AvgCount aAvgCount= new AvgCount(x, 1);
+                
+                System.out.println("createCombiner call aAvgCount ->"+aAvgCount.hashCode());
+                return aAvgCount;
             }
         };
 
@@ -64,6 +66,8 @@ public class PairRDDWordCountCombineByKeyDemo {
             private static final long serialVersionUID = 835666279349127098L;
 
             public AvgCount call(AvgCount a, Integer x) {
+                System.out.println("mergeValue call a ->"+a.hashCode());
+                
                 //分区内进行累加
                 a.total_ += x;
                 a.num_ += 1;
@@ -74,11 +78,14 @@ public class PairRDDWordCountCombineByKeyDemo {
             private static final long serialVersionUID = -443401171742106531L;
 
             public AvgCount call(AvgCount a, AvgCount b) {
-                
+//                AvgCount newAvgCount=new AvgCount();
+               
                 //合并各个分区
-                a.total_ += b.total_;
-                a.num_ += b.num_;
-                return a;
+                int total= a.total_ +b.total_;
+                int num=a.num_ + b.num_;
+                AvgCount m= new AvgCount(total,num);
+                System.out.println("mergeCombiners call("+a.hashCode()+","+b.hashCode()+")->"+m.hashCode());
+                return m;
             }
         };
         
