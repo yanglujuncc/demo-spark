@@ -9,27 +9,25 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function;
 
 public class HelloWorldDemo {
-	
-	public static void main(String[] args){
+
+    public static void main(String[] args) {
 
         List<String> srcData = Arrays.asList("abc", "a", "b", "c");
 
         SparkConf conf = new SparkConf().setAppName("Simple Application");
-        conf.setMaster("local[2]");
+        conf.setMaster("local");
         JavaSparkContext sc = new JavaSparkContext(conf);
 
         JavaRDD<String> logData = sc.parallelize(srcData).cache();
 
- 
-
-        long numAs = logData.filter(new Function<String,Boolean>() {
+        long numAs = logData.filter(new Function<String, Boolean>() {
 
             /**
-			 * 
-			 */
-			private static final long serialVersionUID = 5381930222098233051L;
+            	 * 
+            	 */
+            private static final long serialVersionUID = 5381930222098233051L;
 
-			public Boolean call(String s) {
+            public Boolean call(String s) {
 
                 return s.contains("a");
 
@@ -37,16 +35,14 @@ public class HelloWorldDemo {
 
         }).count();
 
- 
-
-        long numBs = logData.filter(new Function<String,Boolean>() {
+        long numBs = logData.filter(new Function<String, Boolean>() {
 
             /**
-			 * 
-			 */
-			private static final long serialVersionUID = 4106701822571019042L;
+            	 * 
+            	 */
+            private static final long serialVersionUID = 4106701822571019042L;
 
-			public Boolean call(String s) {
+            public Boolean call(String s) {
 
                 return s.contains("b");
 
@@ -54,13 +50,9 @@ public class HelloWorldDemo {
 
         }).count();
 
- 
-
         long count = logData.count();
 
- 
-
-        System.out.println("Lines with a: " + numAs + ", lines with b: "+ numBs+ ", count = " + count);
+        System.out.println("Lines with a: " + numAs + ", lines with b: " + numBs + ", count = " + count);
 
     }
 }

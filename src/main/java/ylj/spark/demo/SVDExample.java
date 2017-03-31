@@ -39,7 +39,7 @@ public class SVDExample {
 	}
 	
 	public static void test2(){
-		SparkConf conf = new SparkConf().setAppName("SVDTest").setMaster("local[2]");
+		SparkConf conf = new SparkConf().setAppName("SVDTest").setMaster("local");
 		 JavaSparkContext sc = new JavaSparkContext(conf);
 	  
 	    JavaRDD<String> data = sc.textFile("/home/yurnom/data/svd.txt");
