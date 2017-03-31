@@ -51,8 +51,11 @@ public class HelloWorldDemo {
         }).count();
 
         long count = logData.count();
+        
+        
 
         System.out.println("Lines with a: " + numAs + ", lines with b: " + numBs + ", count = " + count);
 
+        sc.stop();
     }
 }
